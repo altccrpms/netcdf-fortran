@@ -1,0 +1,12 @@
+diff -up netcdf-fortran-4.2-beta4/nf-config.in.fflags netcdf-fortran-4.2-beta4/nf-config.in
+--- netcdf-fortran-4.2-beta4/nf-config.in.fflags	2011-09-20 11:59:38.000000000 -0600
++++ netcdf-fortran-4.2-beta4/nf-config.in	2011-09-20 12:00:34.754484776 -0600
+@@ -11,7 +11,7 @@ includedir=${prefix}/include
+ cc="@CC@"
+ fc="@FC@"
+ cflags=" -I${includedir} @CPPFLAGS@" 
+-fflags="@FFLAGS@ @MOD_FLAG@${includedir}"
++fflags="@MOD_FLAG@${includedir}"
+ libs=`pkgconfig netcdf-fortran --libs`
+ flibs=`pkgconfig netcdf-fortran --flibs`
+ has_dap="@HAS_DAP@"
