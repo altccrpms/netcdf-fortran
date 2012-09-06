@@ -208,7 +208,7 @@ done
 
 %check
 make -C build check
-for mpi in mpich2 openmpi
+for mpi in %{mpi_list}
 do
   module load $mpi-%{_arch}
   make -C $mpi check
