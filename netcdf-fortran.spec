@@ -5,7 +5,7 @@
 %global _infodir %{_prefix}/share/info
 %global _mandir %{_prefix}/share/man
 
-%global _cc_name intel
+%global _cc_name pgf
 %global _cc_name_suffix -%{_cc_name}
 
 #We don't want to be beholden to the proprietary libraries
@@ -188,13 +188,9 @@ sed -i -e '1i#!/bin/sh' examples/F90/run_f90_par_examples.sh
 mkdir build
 pushd build
 ln -s ../configure .
-export CC=icc
-export CXX=icpc
-export F77=ifort
-export FC=ifort
-export CFLAGS="-g -O3 -axSSE2,SSE4.1,SSE4.2"
-export CXXFLAGS="$CFLAGS"
-export FFLAGS="$CFLAGS"
+export F77=pgf90
+export FC=pgf90
+export FFLAGS="-g -fastsse"
 module load netcdf/%{_cc_name}
 %configure --enable-extra-example-tests
 make %{?_smp_mflags}
