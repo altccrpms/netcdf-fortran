@@ -45,7 +45,9 @@ BuildRequires:  openssh-clients
 
 # AltCCRPMS
 Requires:       environment-modules
+Provides:       %{shortname}%{?_cc_name_suffix} = %{version}-%{release}
 Provides:       %{shortname}%{?_cc_name_suffix}%{?_isa} = %{version}-%{release}
+Requires:       netcdf%{?_cc_name_suffix}%{?_isa}
 
 
 %global with_mpich2 0
@@ -77,7 +79,8 @@ Summary:        Development files for Fortran NetCDF API
 Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       pkgconfig
-Requires:       netcdf%{?_cc_name_suffix}-devel
+Requires:       netcdf%{?_cc_name_suffix}-devel%{?_isa}
+Provides:       %{shortname}%{?_cc_name_suffix}-devel = %{version}-%{release}
 Provides:       %{shortname}%{?_cc_name_suffix}-devel%{?_isa} = %{version}-%{release}
 
 %description devel
@@ -89,6 +92,7 @@ and man pages.
 Summary:        Static library for Fortran NetCDF API
 Group:          Development/Libraries
 Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
+Provides:       %{shortname}%{?_cc_name_suffix}-static = %{version}-%{release}
 Provides:       %{shortname}%{?_cc_name_suffix}-static%{?_isa} = %{version}-%{release}
 
 %description static
@@ -101,7 +105,8 @@ Summary: NetCDF Fortran mpich2 libraries
 Group: Development/Libraries
 Requires: mpich2%{?_cc_name_suffix}
 BuildRequires: mpich2-devel
-BuildRequires: netcdf-mpich2%{?_cc_name_suffix}-devel
+BuildRequires: netcdf-mpich2%{?_cc_name_suffix}-devel%{?_isa}
+Provides:       %{shortname}-mpich2%{?_cc_name_suffix} = %{version}-%{release}
 Provides:       %{shortname}-mpich2%{?_cc_name_suffix}%{?_isa} = %{version}-%{release}
 
 %description mpich2
@@ -114,8 +119,9 @@ Group: Development/Libraries
 Requires: %{name}-mpich2%{?_isa} = %{version}-%{release}
 Requires: mpich2%{?_cc_name_suffix}
 Requires: pkgconfig
-Requires: netcdf%{?_cc_name_suffix}-mpich2-devel
+Requires: netcdf%{?_cc_name_suffix}-mpich2-devel%{?_isa}
 Requires: libcurl-devel
+Provides:       %{shortname}-mpich2%{?_cc_name_suffix}-devel = %{version}-%{release}
 Provides:       %{shortname}-mpich2%{?_cc_name_suffix}-devel%{?_isa} = %{version}-%{release}
 
 %description mpich2-devel
@@ -126,6 +132,7 @@ NetCDF Fortran parallel mpich2 development files
 Summary: NetCDF Fortran mpich2 static libraries
 Group: Development/Libraries
 Requires: %{name}-mpich2-devel%{?_isa} = %{version}-%{release}
+Provides:       %{shortname}-mpich2%{?_cc_name_suffix}-static = %{version}-%{release}
 Provides:       %{shortname}-mpich2%{?_cc_name_suffix}-static%{?_isa} = %{version}-%{release}
 
 %description mpich2-static
@@ -137,9 +144,10 @@ NetCDF Fortran parallel mpich2 static libraries
 %package openmpi
 Summary: NetCDF Fortran openmpi libraries
 Group: Development/Libraries
-#Requires: openmpi%{?_cc_name_suffix}
-#BuildRequires: openmpi%{?_cc_name_suffix}-devel
-BuildRequires: netcdf-openmpi%{?_cc_name_suffix}-devel
+Requires: openmpi%{?_cc_name_suffix}%{?_isa}
+BuildRequires: openmpi%{?_cc_name_suffix}-devel%{?_isa}
+BuildRequires: netcdf-openmpi%{?_cc_name_suffix}-devel%{?_isa}
+Provides:       %{shortname}-openmpi%{?_cc_name_suffix} = %{version}-%{release}
 Provides:       %{shortname}-openmpi%{?_cc_name_suffix}%{?_isa} = %{version}-%{release}
 
 %description openmpi
@@ -150,10 +158,11 @@ NetCDF Fortran parallel openmpi libraries
 Summary: NetCDF Fortran openmpi development files
 Group: Development/Libraries
 Requires: %{name}-openmpi%{_isa} = %{version}-%{release}
-#Requires: openmpi%{?_cc_name_suffix}-devel
+Requires: openmpi%{?_cc_name_suffix}-devel%{?_isa}
 Requires: gcc-gfortran%{_isa}
-Requires: netcdf-openmpi%{?_cc_name_suffix}-devel
+Requires: netcdf-openmpi%{?_cc_name_suffix}-devel%{?_isa}
 Requires: libcurl-devel
+Provides:       %{shortname}-openmpi%{?_cc_name_suffix}-devel = %{version}-%{release}
 Provides:       %{shortname}-openmpi%{?_cc_name_suffix}-devel%{?_isa} = %{version}-%{release}
 
 %description openmpi-devel
@@ -164,6 +173,7 @@ NetCDF Fortran parallel openmpi development files
 Summary: NetCDF Fortran openmpi static libraries
 Group: Development/Libraries
 Requires: %{name}-openmpi-devel%{?_isa} = %{version}-%{release}
+Provides:       %{shortname}-openmpi%{?_cc_name_suffix}-static = %{version}-%{release}
 Provides:       %{shortname}-openmpi%{?_cc_name_suffix}-static%{?_isa} = %{version}-%{release}
 
 %description openmpi-static
