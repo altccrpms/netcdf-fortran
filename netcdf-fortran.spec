@@ -202,7 +202,7 @@ pushd build
 ln -s ../configure .
 export F77=pgf90
 export FC=pgf90
-export FFLAGS="-g -fastsse"
+export FFLAGS="-g -Mnoref_externals -fastsse"
 module load netcdf/%{_cc_name}
 %configure --enable-extra-example-tests
 make %{?_smp_mflags}
