@@ -106,6 +106,7 @@ Group: Development/Libraries
 Requires: mpich2%{?_cc_name_suffix}
 BuildRequires: mpich2-devel
 BuildRequires: netcdf-mpich2%{?_cc_name_suffix}-devel%{?_isa}
+Requires:       netcdf-mpich2%{?_cc_name_suffix}%{?_isa}
 Provides:       %{shortname}-mpich2%{?_cc_name_suffix} = %{version}-%{release}
 Provides:       %{shortname}-mpich2%{?_cc_name_suffix}%{?_isa} = %{version}-%{release}
 
@@ -147,6 +148,7 @@ Group: Development/Libraries
 Requires: openmpi%{?_cc_name_suffix}%{?_isa}
 BuildRequires: openmpi%{?_cc_name_suffix}-devel%{?_isa}
 BuildRequires: netcdf-openmpi%{?_cc_name_suffix}-devel%{?_isa}
+Requires:       netcdf-openmpi%{?_cc_name_suffix}%{?_isa}
 Provides:       %{shortname}-openmpi%{?_cc_name_suffix} = %{version}-%{release}
 Provides:       %{shortname}-openmpi%{?_cc_name_suffix}%{?_isa} = %{version}-%{release}
 
