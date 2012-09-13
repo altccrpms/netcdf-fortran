@@ -260,15 +260,15 @@ done
 
 # AltCCRPMS
 # Make the environment-modules file
-mkdir -p %{buildroot}/etc/modulefiles/%{shortname}/%{_cc_name}
+mkdir -p %{buildroot}/etc/modulefiles/%{shortname}/%{_cc_name}/%{version}
 # Since we're doing our own substitution here, use our own definitions.
 sed -e 's#@PREFIX@#'%{_prefix}'#' -e 's#@LIB@#%{_lib}#' -e 's#@ARCH@#%{_arch}#' -e 's#@CC@#%{_cc_name}#' \
-< %SOURCE2 > %{buildroot}/etc/modulefiles/%{shortname}/%{_cc_name}/%{version}-%{_arch}
+< %SOURCE2 > %{buildroot}/etc/modulefiles/%{shortname}/%{_cc_name}/%{version}/%{_arch}
 for mpi in %{mpi_list}
 do
-mkdir -p %{buildroot}/etc/modulefiles/%{shortname}/${mpi}-%{_cc_name}
+mkdir -p %{buildroot}/etc/modulefiles/%{shortname}/${mpi}-%{_cc_name}/%{version}
 sed -e 's#@PREFIX@#'%{_prefix}'#' -e 's#@LIB@#%{_lib}#' -e 's#@ARCH@#%{_arch}#' -e 's#@CC@#%{_cc_name}#'  -e 's#@MPI@#'$mpi'#' \
-    < %SOURCE3 > %{buildroot}/etc/modulefiles/%{shortname}/${mpi}-%{_cc_name}/%{version}-%{_arch}
+    < %SOURCE3 > %{buildroot}/etc/modulefiles/%{shortname}/${mpi}-%{_cc_name}/%{version}/%{_arch}
 done
 
 
@@ -311,7 +311,7 @@ fi
 
 %files
 %doc COPYRIGHT README
-/etc/modulefiles/%{shortname}/%{_cc_name}/%{version}-%{_arch}
+/etc/modulefiles/%{shortname}/%{_cc_name}/
 %{_libdir}/*.so.*
 %{_infodir}/netcdf-f*
 
@@ -331,7 +331,7 @@ fi
 %if %{with_mpich2}
 %files mpich2
 %doc COPYRIGHT
-/etc/modulefiles/%{shortname}/mpich2-%{_cc_name}/%{version}-%{_arch}
+/etc/modulefiles/%{shortname}/mpich2-%{_cc_name}/
 %{_libdir}/mpich2/lib/*.so.*
 
 %files mpich2-devel
@@ -348,7 +348,7 @@ fi
 %if %{with_openmpi}
 %files openmpi
 %doc COPYRIGHT
-/etc/modulefiles/%{shortname}/openmpi-%{_cc_name}/%{version}-%{_arch}
+/etc/modulefiles/%{shortname}/openmpi-%{_cc_name}/
 %{_libdir}/openmpi/lib/*.so.*
 
 %files openmpi-devel
