@@ -1,6 +1,6 @@
 # AltCCRPMS
 # Special for netcdf pacakges - we want to install alongside main netcdf package
-%global _prefix /opt/netcdf42/%{version}
+%global _prefix /opt/netcdf42-%{_cc_name}/%{version}
 %global _sysconfdir %{_prefix}/etc
 %global _defaultdocdir %{_prefix}/share/doc
 %global _infodir %{_prefix}/share/info
