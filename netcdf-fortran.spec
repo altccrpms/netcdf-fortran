@@ -172,7 +172,7 @@ for mpi in %{mpi_list}
 do
   mkdir $mpi
   pushd $mpi
-  module load $mpi-%{_arch}
+  module load mpi/$mpi-%{_arch}
   ln -s ../configure .
   %configure \
     --libdir=%{_libdir}/$mpi/lib \
@@ -197,7 +197,7 @@ mkdir -p ${RPM_BUILD_ROOT}%{_fmoddir}
 /bin/rm -f ${RPM_BUILD_ROOT}%{_libdir}/*.la
 for mpi in %{mpi_list}
 do
-  module load $mpi-%{_arch}
+  module load mpi/$mpi-%{_arch}
   make -C $mpi install DESTDIR=${RPM_BUILD_ROOT}
   rm $RPM_BUILD_ROOT/%{_libdir}/$mpi/lib/*.la
   gzip $RPM_BUILD_ROOT/%{_libdir}/$mpi/share/man/man3/*.3
@@ -210,7 +210,7 @@ done
 make -C build check
 for mpi in %{mpi_list}
 do
-  module load $mpi-%{_arch}
+  module load mpi/$mpi-%{_arch}
   make -C $mpi check
   module purge
 done
@@ -291,6 +291,7 @@ fi
 %changelog
 * Thu Nov 1 2012 Orion Poplawski <orion@cora.nwra.com> - 4.2-5
 - Rebuild for openmpi and mpich2 soname bumps
+- Use new mpi module location
 
 * Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
