@@ -1,6 +1,6 @@
 Name:           netcdf-fortran
 Version:        4.2
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -289,6 +289,9 @@ fi
 
 
 %changelog
+* Mon Nov 5 2012 Orion Poplawski <orion@cora.nwra.com> - 4.2-6
+- Rebuild for fixed openmpi f90 soname
+
 * Thu Nov 1 2012 Orion Poplawski <orion@cora.nwra.com> - 4.2-5
 - Rebuild for openmpi and mpich2 soname bumps
 - Use new mpi module location
