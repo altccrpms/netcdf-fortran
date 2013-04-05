@@ -1,16 +1,14 @@
 Name:           netcdf-fortran
 Version:        4.2
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
 License:        NetCDF
 URL:            http://www.unidata.ucar.edu/software/netcdf/
 Source0:        http://www.unidata.ucar.edu/downloads/netcdf/ftp/%{name}-%{version}.tar.gz
-#Use pkgconfig in nc-config to avoid multi-lib issues
-Patch0:         netcdf-pkgconfig.patch
-#Strip FFLAGS from nc-config
-Patch1:         netcdf-fflags.patch
+#Use pkgconfig in nf-config to avoid multi-lib issues and remove FFLAGS
+Patch0:         netcdf-fortran-pkgconfig.patch
 # Fix issue parsing mpif90 output
 Patch2:         netcdf-postdeps.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -142,7 +140,6 @@ NetCDF Fortran parallel openmpi static libraries
 %prep
 %setup -q
 %patch0 -p1 -b .pkgconfig
-%patch1 -p1 -b .fflags
 %patch2 -p1 -b .postdeps
 sed -i -e '1i#!/bin/sh' examples/F90/run_f90_par_examples.sh
 
@@ -289,6 +286,9 @@ fi
 
 
 %changelog
+* Thu Apr 4 2013 Orion Poplawski <orion@cora.nwra.com> - 4.2-8
+- Fix patches to use pkg-config (bug #948640)
+ 
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
