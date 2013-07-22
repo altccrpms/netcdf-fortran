@@ -1,6 +1,6 @@
 Name:           netcdf-fortran
 Version:        4.2
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -19,12 +19,12 @@ BuildRequires:  netcdf-devel
 #https://trac.mcs.anl.gov/projects/mpich2/ticket/1576
 BuildRequires:  openssh-clients
 
-%global with_mpich2 1
+%global with_mpich 1
 %global with_openmpi 1
 %if 0%{?rhel}
 %ifarch ppc64
 # No mpich2 on ppc64 in EL
-%global with_mpich2 0
+%global with_mpich 0
 %endif
 %endif
 %ifarch s390 s390x
@@ -32,8 +32,8 @@ BuildRequires:  openssh-clients
 %global with_openmpi 0
 %endif
 
-%if %{with_mpich2}
-%global mpi_list mpich2
+%if %{with_mpich}
+%global mpi_list mpich
 %endif
 %if %{with_openmpi}
 %global mpi_list %{?mpi_list} openmpi
@@ -65,39 +65,45 @@ Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
 This package contains the NetCDF Fortran static library.
 
 
-%if %{with_mpich2}
-%package mpich2
-Summary: NetCDF Fortran mpich2 libraries
+%if %{with_mpich}
+%package mpich
+Summary: NetCDF Fortran mpich libraries
 Group: Development/Libraries
-Requires: mpich2
-BuildRequires: mpich2-devel
-BuildRequires: netcdf-mpich2-devel
+Requires: mpich
+BuildRequires: mpich-devel
+BuildRequires: netcdf-mpich-devel
+Provides: %{name}-mpich2 = %{version}-%{release}
+Obsoletes: %{name}-mpich2 < 4.2-10
 
-%description mpich2
-NetCDF Fortran parallel mpich2 libraries
+%description mpich
+NetCDF Fortran parallel mpich libraries
 
 
-%package mpich2-devel
-Summary: NetCDF Fortran mpich2 development files
+%package mpich-devel
+Summary: NetCDF Fortran mpich development files
 Group: Development/Libraries
-Requires: %{name}-mpich2%{?_isa} = %{version}-%{release}
-Requires: mpich2
+Requires: %{name}-mpich%{?_isa} = %{version}-%{release}
+Requires: mpich
 Requires: gcc-gfortran%{_isa}
 Requires: pkgconfig
-Requires: netcdf-mpich2-devel
+Requires: netcdf-mpich-devel
 Requires: libcurl-devel
+Provides: %{name}-mpich2-devel = %{version}-%{release}
+Obsoletes: %{name}-mpich2-devel < 4.2-10
 
-%description mpich2-devel
-NetCDF Fortran parallel mpich2 development files
+%description mpich-devel
+NetCDF Fortran parallel mpich development files
 
 
-%package mpich2-static
-Summary: NetCDF Fortran mpich2 static libraries
+%package mpich-static
+Summary: NetCDF Fortran mpich static libraries
 Group: Development/Libraries
-Requires: %{name}-mpich2-devel%{?_isa} = %{version}-%{release}
+Requires: %{name}-mpich-devel%{?_isa} = %{version}-%{release}
+Provides: %{name}-mpich2-static = %{version}-%{release}
+Obsoletes: %{name}-mpich2-static < 4.2-10
 
-%description mpich2-static
-NetCDF Fortran parallel mpich2 static libraries
+%description mpich-static
+NetCDF Fortran parallel mpich static libraries
 %endif
 
 
@@ -252,20 +258,20 @@ fi
 %{_libdir}/*.a
 
 
-%if %{with_mpich2}
-%files mpich2
+%if %{with_mpich}
+%files mpich
 %doc COPYRIGHT
-%{_libdir}/mpich2/lib/*.so.*
+%{_libdir}/mpich/lib/*.so.*
 
-%files mpich2-devel
-%{_libdir}/mpich2/bin/nf-config
-%{_includedir}/mpich2-%{_arch}/*
-%{_libdir}/mpich2/lib/*.so
-%{_libdir}/mpich2/lib/pkgconfig/%{name}.pc
-%{_libdir}/mpich2/share/man/man3/*
+%files mpich-devel
+%{_libdir}/mpich/bin/nf-config
+%{_includedir}/mpich-%{_arch}/*
+%{_libdir}/mpich/lib/*.so
+%{_libdir}/mpich/lib/pkgconfig/%{name}.pc
+%{_libdir}/mpich/share/man/man3/*
 
-%files mpich2-static
-%{_libdir}/mpich2/lib/*.a
+%files mpich-static
+%{_libdir}/mpich/lib/*.a
 %endif
 
 %if %{with_openmpi}
@@ -286,6 +292,9 @@ fi
 
 
 %changelog
+* Mon Jul 22 2013 Deji Akingunola <dakingun@gmail.com> - 4.2-10
+- Rename mpich2 sub-packages to mpich and rebuild for mpich-3.0
+
 * Wed Jul 17 2013 Orion Poplawski <orion@cora.nwra.com> - 4.2-9
 - Rebuild for openmpi 1.7
 
