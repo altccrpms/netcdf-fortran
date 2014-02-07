@@ -21,9 +21,9 @@ BuildRequires:  openssh-clients
 
 %global with_mpich 1
 %global with_openmpi 1
-%if 0%{?rhel}
+%if 0%{?rhel} <= 6
 %ifarch ppc64
-# No mpich2 on ppc64 in EL
+# No mpich on ppc64 in EL6
 %global with_mpich 0
 %endif
 %endif
