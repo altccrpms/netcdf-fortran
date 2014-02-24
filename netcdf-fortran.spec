@@ -1,6 +1,6 @@
 Name:           netcdf-fortran
 Version:        4.2
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -292,6 +292,9 @@ fi
 
 
 %changelog
+* Mon Feb 24 2014 Orion Poplawski <orion@cora.nwra.com> - 4.2-12
+- Rebuild for mpich-3.1
+
 * Wed Jul 31 2013 Orion Poplawski <orion@cora.nwra.com> - 4.2-11
 - Build for arm
 
