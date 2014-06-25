@@ -1,6 +1,6 @@
 Name:           netcdf-fortran
 Version:        4.2
-Release:        13%{?dist}
+Release:        14%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -149,6 +149,8 @@ NetCDF Fortran parallel openmpi static libraries
 %patch2 -p1 -b .postdeps
 sed -i -e '1i#!/bin/sh' examples/F90/run_f90_par_examples.sh
 
+# Update config.guess/sub to fix builds on new architectures (aarch64/ppc64le)
+cp /usr/lib/rpm/config.* .
 
 %build
 #Do out of tree builds
@@ -292,6 +294,9 @@ fi
 
 
 %changelog
+* Wed Jun 25 2014 Peter Robinson <pbrobinson@fedoraproject.org> 4.2-14
+- Update config.guess/sub for new arch support (aarch64/ppc64le)
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2-13
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
