@@ -1,6 +1,6 @@
 Name:           netcdf-fortran
 Version:        4.2
-Release:        14%{?dist}
+Release:        15%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -294,6 +294,9 @@ fi
 
 
 %changelog
+* Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2-15
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
 * Wed Jun 25 2014 Peter Robinson <pbrobinson@fedoraproject.org> 4.2-14
 - Update config.guess/sub for new arch support (aarch64/ppc64le)
 
