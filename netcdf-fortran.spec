@@ -1,6 +1,6 @@
 Name:           netcdf-fortran
 Version:        4.2
-Release:        15%{?dist}
+Release:        16%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -294,6 +294,9 @@ fi
 
 
 %changelog
+* Wed Aug 27 2014 Orion Poplawski <orion@cora.nwra.com> - 4.2-16
+- Rebuild for openmpi Fortran ABI change
+
 * Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2-15
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
