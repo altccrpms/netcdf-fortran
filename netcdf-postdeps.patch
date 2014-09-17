@@ -1,8 +1,8 @@
-diff -up netcdf-fortran-4.2/configure.postdeps netcdf-fortran-4.2/configure
---- netcdf-fortran-4.2/configure.postdeps	2011-10-03 08:10:43.000000000 -0600
-+++ netcdf-fortran-4.2/configure	2012-03-07 12:23:14.387532317 -0700
-@@ -14790,10 +14790,11 @@ if { { eval echo "\"\$as_me\":${as_linen
-     case $p in
+diff -up netcdf-fortran-4.4.1/configure.postdeps netcdf-fortran-4.4.1/configure
+--- netcdf-fortran-4.4.1/configure.postdeps	2014-09-16 21:40:02.181108003 -0600
++++ netcdf-fortran-4.4.1/configure	2014-09-16 21:40:58.470207376 -0600
+@@ -16205,10 +16205,11 @@ if { { eval echo "\"\$as_me\":${as_linen
+     case ${prev}${p} in
  
      -L* | -R* | -l*)
 -       # Some compilers place space between "-{L,R}" and the path.
@@ -14,4 +14,4 @@ diff -up netcdf-fortran-4.2/configure.postdeps netcdf-fortran-4.2/configure
 +          test $p = "-l"; then
  	 prev=$p
  	 continue
-        else
+        fi

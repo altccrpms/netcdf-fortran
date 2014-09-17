@@ -1,34 +1,8 @@
-diff -up netcdf-fortran-4.2/netcdf-fortran.pc.in.pkgconfig netcdf-fortran-4.2/netcdf-fortran.pc.in
---- netcdf-fortran-4.2/netcdf-fortran.pc.in.pkgconfig	2011-09-27 08:17:02.000000000 -0600
-+++ netcdf-fortran-4.2/netcdf-fortran.pc.in	2013-04-04 19:48:53.967520097 -0600
-@@ -1,16 +1,11 @@
--prefix=/usr/local
--exec_prefix=${prefix}
--libdir=${exec_prefix}/lib
-+prefix=@prefix@
-+exec_prefix=@prefix@
-+libdir=@libdir@
- includedir=${prefix}/include
--ccompiler=gcc
--cppcompiler=@CXX@
--fcompiler=gfortran
--fflags=-g -O2 -I${includedir}
--flibs=-lnetcdff -lnetcdf
- 
--Name: netcdf
--Description: NetCDF Client Library
-+Name: NetCDF Fortran
-+Description: NetCDF Fortran Client Library
- Version: 4.2
--Libs: -L${libdir} -lnetcdf
-+Libs: -L${libdir} -lnetcdff
-+Libs.private: -L${libdir} -lnetcdff -lnetcdf
- Cflags: -I${includedir}
--
-diff -up netcdf-fortran-4.2/nf-config.in.pkgconfig netcdf-fortran-4.2/nf-config.in
---- netcdf-fortran-4.2/nf-config.in.pkgconfig	2011-09-27 08:17:02.000000000 -0600
-+++ netcdf-fortran-4.2/nf-config.in	2013-04-04 19:40:58.668652505 -0600
-@@ -6,15 +6,14 @@
+diff -up netcdf-fortran-4.4.1/netcdf-fortran.pc.in.pkgconfig netcdf-fortran-4.4.1/netcdf-fortran.pc.in
+diff -up netcdf-fortran-4.4.1/nf-config.in.pkgconfig netcdf-fortran-4.4.1/nf-config.in
+--- netcdf-fortran-4.4.1/nf-config.in.pkgconfig	2014-09-16 21:36:16.517700603 -0600
++++ netcdf-fortran-4.4.1/nf-config.in	2014-09-16 21:38:14.109997291 -0600
+@@ -5,7 +5,6 @@
  
  prefix=@prefix@
  exec_prefix=${prefix}
@@ -36,28 +10,12 @@ diff -up netcdf-fortran-4.2/nf-config.in.pkgconfig netcdf-fortran-4.2/nf-config.
  includedir=${prefix}/include
  
  cc="@CC@"
- fc="@FC@"
- cflags=" -I${includedir} @CPPFLAGS@" 
--fflags="@FFLAGS@ @MOD_FLAG@${includedir}"
--libs="-L${libdir} @NC_LIBS@"
--flibs="-L${libdir} @NC_FLIBS@"
-+fflags="@MOD_FLAG@${includedir}"
-+libs=`pkg-config netcdf-fortran --libs`
-+flibs=`pkg-config netcdf-fortran --libs`
- has_dap="@HAS_DAP@"
- has_nc2="@HAS_NC2@"
+@@ -17,7 +16,7 @@ has_nc2="@HAS_NC2@"
  has_nc4="@HAS_NC4@"
-@@ -113,11 +112,11 @@ while test $# -gt 0; do
- 	;;
+ has_f90="@HAS_F90@"
+ has_f03="@HAS_F03@"
+-flibs="-L${libdir} @NC_FLIBS@"
++flibs=`pkg-config netcdf-fortran --libs`
+ version="@PACKAGE_NAME@ @PACKAGE_VERSION@"
  
-      --libs)
--       	echo $libs
-+       	pkg-config netcdf-fortran --libs
-        	;;
- 
-     --flibs)
--       	echo $flibs
-+       	pkg-config netcdf-fortran --libs
-        	;;
- 
-     --has-dap)
+ usage()

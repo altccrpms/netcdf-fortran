@@ -1,10 +1,10 @@
 Name:           netcdf-fortran
-Version:        4.2
-Release:        16%{?dist}
+Version:        4.4.1
+Release:        1%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
-License:        NetCDF
+License:        NetCDF and ASL 2.0
 URL:            http://www.unidata.ucar.edu/software/netcdf/
 Source0:        http://www.unidata.ucar.edu/downloads/netcdf/ftp/%{name}-%{version}.tar.gz
 #Use pkgconfig in nf-config to avoid multi-lib issues and remove FFLAGS
@@ -225,27 +225,14 @@ done
 rm -rf ${RPM_BUILD_ROOT}
 
 
-%post
-/sbin/ldconfig
-/sbin/install-info %{_infodir}/netcdf-f77.info \
-    %{_infodir}/dir 2>/dev/null || :
-/sbin/install-info %{_infodir}/netcdf-f90.info \
-    %{_infodir}/dir 2>/dev/null || :
+%post -p /sbin/ldconfig
 
-%postun
-/sbin/ldconfig
-if [ "$1" = 0 ]; then
-  /sbin/install-info --delete %{_infodir}/netcdf-f77.info \
-    %{_infodir}/dir 2>/dev/null || :
-  /sbin/install-info --delete %{_infodir}/netcdf-f90.info \
-    %{_infodir}/dir 2>/dev/null || :
-fi
+%postun -p /sbin/ldconfig
 
 
 %files
-%doc COPYRIGHT README
+%doc COPYRIGHT F03Interfaces_LICENSE README.md RELEASE_NOTES.md
 %{_libdir}/*.so.*
-%{_infodir}/netcdf-f*
 
 %files devel
 %doc examples
@@ -262,7 +249,7 @@ fi
 
 %if %{with_mpich}
 %files mpich
-%doc COPYRIGHT
+%doc COPYRIGHT F03Interfaces_LICENSE README.md RELEASE_NOTES.md
 %{_libdir}/mpich/lib/*.so.*
 
 %files mpich-devel
@@ -278,7 +265,7 @@ fi
 
 %if %{with_openmpi}
 %files openmpi
-%doc COPYRIGHT
+%doc COPYRIGHT F03Interfaces_LICENSE README.md RELEASE_NOTES.md
 %{_libdir}/openmpi/lib/*.so.*
 
 %files openmpi-devel
@@ -294,6 +281,9 @@ fi
 
 
 %changelog
+* Tue Sep 16 2014 Orion Poplawski <orion@cora.nwra.com> - 4.4.1-1
+- Update to 4.4.1
+
 * Wed Aug 27 2014 Orion Poplawski <orion@cora.nwra.com> - 4.2-16
 - Rebuild for openmpi Fortran ABI change
 
