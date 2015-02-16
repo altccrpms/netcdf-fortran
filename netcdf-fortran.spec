@@ -1,6 +1,6 @@
 Name:           netcdf-fortran
 Version:        4.4.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -281,6 +281,9 @@ rm -rf ${RPM_BUILD_ROOT}
 
 
 %changelog
+* Mon Feb 16 2015 Orion Poplawski <orion@cora.nwra.com> - 4.4.1-2
+- Rebuild for gcc 5 fortran module
+
 * Tue Sep 16 2014 Orion Poplawski <orion@cora.nwra.com> - 4.4.1-1
 - Update to 4.4.1
 
