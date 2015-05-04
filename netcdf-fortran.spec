@@ -11,7 +11,6 @@ Source0:        http://www.unidata.ucar.edu/downloads/netcdf/ftp/%{name}-%{versi
 Patch0:         netcdf-fortran-pkgconfig.patch
 # Fix issue parsing mpif90 output
 Patch2:         netcdf-postdeps.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  gcc-gfortran
 BuildRequires:  netcdf-devel
@@ -219,10 +218,6 @@ do
   make -C $mpi check
   module purge
 done
-
-
-%clean
-rm -rf ${RPM_BUILD_ROOT}
 
 
 %post -p /sbin/ldconfig
