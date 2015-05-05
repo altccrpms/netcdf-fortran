@@ -211,11 +211,11 @@ done
 
 
 %check
-make -C build check
+make -C build check VERBOSE=1
 for mpi in %{mpi_list}
 do
   module load mpi/$mpi-%{_arch}
-  make -C $mpi check
+  make -C $mpi check VERBOSE=1
   module purge
 done
 
