@@ -1,6 +1,6 @@
 Name:           netcdf-fortran
 Version:        4.4.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -276,6 +276,9 @@ done
 
 
 %changelog
+* Wed May 6 2015 Orion Poplawski <orion@cora.nwra.com> - 4.4.1-4
+- Rebuild without romio hack (fixed with openmpi 1.8.5)
+
 * Mon May  4 2015 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 4.4.1-3
 - Rebuild for changed mpich
 
