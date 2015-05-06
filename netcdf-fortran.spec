@@ -212,8 +212,6 @@ done
 
 %check
 make -C build check VERBOSE=1
-# Force romio for now
-export OMPI_MCA_io=romio
 for mpi in %{mpi_list}
 do
   module load mpi/$mpi-%{_arch}
