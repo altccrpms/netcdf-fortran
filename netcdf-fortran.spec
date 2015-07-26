@@ -1,6 +1,6 @@
 Name:           netcdf-fortran
 Version:        4.4.1
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -68,7 +68,6 @@ This package contains the NetCDF Fortran static library.
 %package mpich
 Summary: NetCDF Fortran mpich libraries
 Group: Development/Libraries
-Requires: mpich
 BuildRequires: mpich-devel
 BuildRequires: netcdf-mpich-devel
 Provides: %{name}-mpich2 = %{version}-%{release}
@@ -82,7 +81,6 @@ NetCDF Fortran parallel mpich libraries
 Summary: NetCDF Fortran mpich development files
 Group: Development/Libraries
 Requires: %{name}-mpich%{?_isa} = %{version}-%{release}
-Requires: mpich
 Requires: gcc-gfortran%{_isa}
 Requires: pkgconfig
 Requires: netcdf-mpich-devel
@@ -110,7 +108,6 @@ NetCDF Fortran parallel mpich static libraries
 %package openmpi
 Summary: NetCDF Fortran openmpi libraries
 Group: Development/Libraries
-Requires: openmpi
 BuildRequires: openmpi-devel
 BuildRequires: netcdf-openmpi-devel
 
@@ -276,6 +273,9 @@ done
 
 
 %changelog
+* Sun Jul 26 2015 Sandro Mani <manisandro@gmail.com> - 4.4.1-6
+- Rebuild for RPM MPI Requires Provides Change
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.4.1-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
