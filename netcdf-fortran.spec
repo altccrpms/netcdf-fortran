@@ -1,6 +1,6 @@
 Name:           netcdf-fortran
-Version:        4.4.1
-Release:        6%{?dist}
+Version:        4.4.2
+Release:        1%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -9,8 +9,6 @@ URL:            http://www.unidata.ucar.edu/software/netcdf/
 Source0:        http://www.unidata.ucar.edu/downloads/netcdf/ftp/%{name}-%{version}.tar.gz
 #Use pkgconfig in nf-config to avoid multi-lib issues and remove FFLAGS
 Patch0:         netcdf-fortran-pkgconfig.patch
-# Fix issue parsing mpif90 output
-Patch2:         netcdf-postdeps.patch
 
 BuildRequires:  gcc-gfortran
 BuildRequires:  netcdf-devel
@@ -142,7 +140,6 @@ NetCDF Fortran parallel openmpi static libraries
 %prep
 %setup -q
 %patch0 -p1 -b .pkgconfig
-%patch2 -p1 -b .postdeps
 sed -i -e '1i#!/bin/sh' examples/F90/run_f90_par_examples.sh
 
 # Update config.guess/sub to fix builds on new architectures (aarch64/ppc64le)
@@ -273,6 +270,10 @@ done
 
 
 %changelog
+* Wed Aug 12 2015 Orion Poplawski <orion@cora.nwra.com> - 4.4.2-1
+- Update to 4.4.2
+- Drop postdeps patch
+
 * Sun Jul 26 2015 Sandro Mani <manisandro@gmail.com> - 4.4.1-6
 - Rebuild for RPM MPI Requires Provides Change
 
