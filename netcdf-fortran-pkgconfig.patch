@@ -1,0 +1,21 @@
+diff -up netcdf-fortran-4.4.1/netcdf-fortran.pc.in.pkgconfig netcdf-fortran-4.4.1/netcdf-fortran.pc.in
+diff -up netcdf-fortran-4.4.1/nf-config.in.pkgconfig netcdf-fortran-4.4.1/nf-config.in
+--- netcdf-fortran-4.4.1/nf-config.in.pkgconfig	2014-09-16 21:36:16.517700603 -0600
++++ netcdf-fortran-4.4.1/nf-config.in	2014-09-16 21:38:14.109997291 -0600
+@@ -5,7 +5,6 @@
+ 
+ prefix=@prefix@
+ exec_prefix=${prefix}
+-libdir=${exec_prefix}/lib
+ includedir=${prefix}/include
+ 
+ cc="@CC@"
+@@ -17,7 +16,7 @@ has_nc2="@HAS_NC2@"
+ has_nc4="@HAS_NC4@"
+ has_f90="@HAS_F90@"
+ has_f03="@HAS_F03@"
+-flibs="-L${libdir} @NC_FLIBS@"
++flibs=`pkg-config netcdf-fortran --libs`
+ version="@PACKAGE_NAME@ @PACKAGE_VERSION@"
+ 
+ usage()
