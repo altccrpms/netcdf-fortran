@@ -55,7 +55,6 @@ BuildRequires:  netcdf%{_name_suffix}-devel%{?_isa}
 BuildRequires:  openssh-clients
 
 # AltCCRPMS
-Requires:       environment-modules
 %if "%{_netcdf_version}" != ""
 Requires:       netcdf%{_name_suffix}%{?_isa} = %{_netcdf_version}
 %endif
@@ -109,8 +108,6 @@ cp /usr/lib/rpm/config.* .
 mkdir build
 pushd build
 ln -s ../configure .
-# netcdf gets confused about Fortran type
-#export CPPFLAGS="-I$NETCDF_INCLUDE -DpgiFortran"
 # ifort -warn all breaks configure
 # https://github.com/Unidata/netcdf-fortran/issues/32
 export FFLAGS=$(echo $FFLAGS | sed -e 's/-warn all//g')
