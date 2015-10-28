@@ -103,6 +103,7 @@ cp /usr/lib/rpm/config.* .
 
 
 %build
+[ -z "$NETCDF_VERSION" ] && echo ERROR: Must load netcdf module first && exit 1
 #Do out of tree builds
 %global _configure ../configure
 mkdir build
@@ -112,14 +113,15 @@ ln -s ../configure .
 # https://github.com/Unidata/netcdf-fortran/issues/32
 export FFLAGS=$(echo $FFLAGS | sed -e 's/-warn all//g')
 export FCFLAGS=$(echo $FCFLAGS | sed -e 's/-warn all//g')
+export F77=$FC
 %if !0%{?_with_mpi}
 # Serial build
 %configure --enable-extra-example-tests
 %else
 # MPI builds
 export CC=mpicc
-export F77=mpif90
 export FC=mpif90
+export F77=$FC
 %configure \
   --enable-parallel \
   --enable-parallel-tests
