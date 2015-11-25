@@ -1,6 +1,6 @@
 Name:           netcdf-fortran
 Version:        4.4.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -173,6 +173,7 @@ do
   module load mpi/$mpi-%{_arch}
   ln -s ../configure .
   %configure \
+    FCFLAGS="$FCFLAGS -I$MPI_FORTRAN_MOD_DIR" \
     --libdir=%{_libdir}/$mpi/lib \
     --bindir=%{_libdir}/$mpi/bin \
     --sbindir=%{_libdir}/$mpi/sbin \
@@ -270,6 +271,9 @@ done
 
 
 %changelog
+* Wed Nov 25 2015 Orion Poplawski <orion@cora.nwra.com> - 4.4.2-3
+- Use MPI_FORTRAN_MOD_DIR
+
 * Thu Sep 17 2015 Orion Poplawski <orion@cora.nwra.com> - 4.4.2-2
 - Rebuild for openmpi 1.10.0
 
