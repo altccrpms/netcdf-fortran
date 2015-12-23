@@ -49,17 +49,16 @@ Source0:        http://www.unidata.ucar.edu/downloads/netcdf/ftp/%{shortname}-%{
 #Use pkgconfig in nf-config to avoid multi-lib issues and remove FFLAGS
 Patch0:         netcdf-fortran-pkgconfig.patch
 
-BuildRequires:  netcdf%{_name_suffix}-devel%{?_isa}
+BuildRequires:  netcdf%{_name_ver_suffix}-devel%{?_isa}
 #mpiexec segfaults if ssh is not present
 #https://trac.mcs.anl.gov/projects/mpich2/ticket/1576
 BuildRequires:  openssh-clients
 
 # AltCCRPMS
-%if "%{_netcdf_version}" != ""
-Requires:       netcdf%{_name_suffix}%{?_isa} = %{_netcdf_version}
-%endif
 Provides:       %{shortname}%{_name_suffix} = %{version}-%{release}
 Provides:       %{shortname}%{_name_suffix}%{?_isa} = %{version}-%{release}
+Provides:       %{shortname}%{_name_ver_suffix} = %{version}-%{release}
+Provides:       %{shortname}%{_name_ver_suffix}%{?_isa} = %{version}-%{release}
 
 
 %description
@@ -72,10 +71,12 @@ Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       pkgconfig
 %if "%{_netcdf_version}" != ""
-Requires:       netcdf%{_name_suffix}-devel%{?_isa} = %{_netcdf_version}
+Requires:       netcdf%{_name_ver_suffix}-devel%{?_isa} = %{_netcdf_version}
 %endif
 Provides:       %{shortname}%{_name_suffix}-devel = %{version}-%{release}
 Provides:       %{shortname}%{_name_suffix}-devel%{?_isa} = %{version}-%{release}
+Provides:       %{shortname}%{_name_ver_suffix}-devel = %{version}-%{release}
+Provides:       %{shortname}%{_name_ver_suffix}-devel%{?_isa} = %{version}-%{release}
 
 %description devel
 This package contains the NetCDF Fortran header files, shared devel libraries,
@@ -88,6 +89,8 @@ Group:          Development/Libraries
 Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
 Provides:       %{shortname}%{_name_suffix}-static = %{version}-%{release}
 Provides:       %{shortname}%{_name_suffix}-static%{?_isa} = %{version}-%{release}
+Provides:       %{shortname}%{_name_ver_suffix}-static = %{version}-%{release}
+Provides:       %{shortname}%{_name_ver_suffix}-static%{?_isa} = %{version}-%{release}
 
 %description static
 This package contains the NetCDF Fortran static library.
