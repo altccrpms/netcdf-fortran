@@ -207,6 +207,8 @@ done
 
 %check
 make -C build check VERBOSE=1
+# Handle builders that can't resolve their own name
+sed -i -s 's/mpiexec/mpiexec -host localhost/' */*.sh
 for mpi in %{mpi_list}
 do
   module load mpi/$mpi-%{_arch}
