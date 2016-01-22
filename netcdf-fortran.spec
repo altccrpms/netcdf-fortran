@@ -1,12 +1,12 @@
 Name:           netcdf-fortran
-Version:        4.4.2
-Release:        3%{?dist}
+Version:        4.4.3
+Release:        1%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
 License:        NetCDF and ASL 2.0
 URL:            http://www.unidata.ucar.edu/software/netcdf/
-Source0:        http://www.unidata.ucar.edu/downloads/netcdf/ftp/%{name}-%{version}.tar.gz
+Source0:        https://github.com/Unidata/%{name}/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 #Use pkgconfig in nf-config to avoid multi-lib issues and remove FFLAGS
 Patch0:         netcdf-fortran-pkgconfig.patch
 
@@ -271,6 +271,9 @@ done
 
 
 %changelog
+* Fri Jan 22 2016 Orion Poplawski <orion@cora.nwra.com> - 4.4.3-1
+- Update to 4.4.3
+
 * Wed Nov 25 2015 Orion Poplawski <orion@cora.nwra.com> - 4.4.2-3
 - Use MPI_FORTRAN_MOD_DIR
 
