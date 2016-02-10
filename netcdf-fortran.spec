@@ -38,14 +38,14 @@
 %global shortname netcdf-fortran
 
 Name:           %{shortname}-4.4.2%{_name_ver_suffix}
-Version:        4.4.2
-Release:        1%{?dist}
+Version:        4.4.3
+Release:        2%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
 License:        NetCDF and ASL 2.0
 URL:            http://www.unidata.ucar.edu/software/netcdf/
-Source0:        http://www.unidata.ucar.edu/downloads/netcdf/ftp/%{shortname}-%{version}.tar.gz
+Source0:        https://github.com/Unidata/%{name}/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 #Use pkgconfig in nf-config to avoid multi-lib issues and remove FFLAGS
 Patch0:         netcdf-fortran-pkgconfig.patch
 
@@ -160,6 +160,18 @@ make -C build check VERBOSE=1
 
 
 %changelog
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 4.4.3-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Fri Jan 22 2016 Orion Poplawski <orion@cora.nwra.com> - 4.4.3-1
+- Update to 4.4.3
+
+* Wed Nov 25 2015 Orion Poplawski <orion@cora.nwra.com> - 4.4.2-3
+- Use MPI_FORTRAN_MOD_DIR
+
+* Thu Sep 17 2015 Orion Poplawski <orion@cora.nwra.com> - 4.4.2-2
+- Rebuild for openmpi 1.10.0
+
 * Wed Aug 12 2015 Orion Poplawski <orion@cora.nwra.com> - 4.4.2-1
 - Update to 4.4.2
 - Drop postdeps patch
