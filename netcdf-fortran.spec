@@ -37,7 +37,7 @@
 
 %global shortname netcdf-fortran
 
-Name:           %{shortname}-4.4.2%{_name_ver_suffix}
+Name:           %{shortname}-4.4.3%{_name_ver_suffix}
 Version:        4.4.3
 Release:        2%{?dist}
 Summary:        Fortran libraries for NetCDF-4
