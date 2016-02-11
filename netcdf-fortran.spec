@@ -45,7 +45,7 @@ Summary:        Fortran libraries for NetCDF-4
 Group:          Applications/Engineering
 License:        NetCDF and ASL 2.0
 URL:            http://www.unidata.ucar.edu/software/netcdf/
-Source0:        https://github.com/Unidata/%{name}/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        https://github.com/Unidata/%{shortname}/archive/v%{version}.tar.gz#/%{shortname}-%{version}.tar.gz
 #Use pkgconfig in nf-config to avoid multi-lib issues and remove FFLAGS
 Patch0:         netcdf-fortran-pkgconfig.patch
 
