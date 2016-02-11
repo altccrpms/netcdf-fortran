@@ -28,10 +28,6 @@
 %global _defaultdocdir %{_prefix}/share/doc
 %global _mandir %{_prefix}/share/man
 
-#We don't want to be beholden to the proprietary libraries
-%global    _use_internal_dependency_generator 0
-%global    __find_requires %{nil}
-
 # Non gcc compilers don't generate build ids
 %undefine _missing_build_ids_terminate_build
 
@@ -59,6 +55,8 @@ Provides:       %{shortname}%{_name_suffix} = %{version}-%{release}
 Provides:       %{shortname}%{_name_suffix}%{?_isa} = %{version}-%{release}
 Provides:       %{shortname}%{_name_ver_suffix} = %{version}-%{release}
 Provides:       %{shortname}%{_name_ver_suffix}%{?_isa} = %{version}-%{release}
+# Special for netcdf-fortran - replace old versions
+Obsoletes:      %{shortname}-4.4.2%{_name_ver_suffix}
 
 
 %description
