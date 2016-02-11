@@ -75,6 +75,8 @@ Provides:       %{shortname}%{_name_suffix}-devel = %{version}-%{release}
 Provides:       %{shortname}%{_name_suffix}-devel%{?_isa} = %{version}-%{release}
 Provides:       %{shortname}%{_name_ver_suffix}-devel = %{version}-%{release}
 Provides:       %{shortname}%{_name_ver_suffix}-devel%{?_isa} = %{version}-%{release}
+# Special for netcdf-fortran - replace old versions
+Obsoletes:      %{shortname}-4.4.2%{_name_ver_suffix}-devel
 
 %description devel
 This package contains the NetCDF Fortran header files, shared devel libraries,
@@ -89,6 +91,8 @@ Provides:       %{shortname}%{_name_suffix}-static = %{version}-%{release}
 Provides:       %{shortname}%{_name_suffix}-static%{?_isa} = %{version}-%{release}
 Provides:       %{shortname}%{_name_ver_suffix}-static = %{version}-%{release}
 Provides:       %{shortname}%{_name_ver_suffix}-static%{?_isa} = %{version}-%{release}
+# Special for netcdf-fortran - replace old versions
+Obsoletes:      %{shortname}-4.4.2%{_name_ver_suffix}-static
 
 %description static
 This package contains the NetCDF Fortran static library.
