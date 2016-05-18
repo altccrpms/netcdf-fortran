@@ -33,9 +33,9 @@
 
 %global shortname netcdf-fortran
 
-Name:           %{shortname}-4.4.3%{_name_ver_suffix}
-Version:        4.4.3
-Release:        2%{?dist}
+Name:           %{shortname}-4.4.4%{_name_ver_suffix}
+Version:        4.4.4
+Release:        1%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -45,7 +45,7 @@ Source0:        https://github.com/Unidata/%{shortname}/archive/v%{version}.tar.
 #Use pkgconfig in nf-config to avoid multi-lib issues and remove FFLAGS
 Patch0:         netcdf-fortran-pkgconfig.patch
 
-BuildRequires:  netcdf%{_name_ver_suffix}-devel%{?_isa}
+BuildRequires:  netcdf%{_name_ver_suffix}-devel%{?_isa} >= 4.4.0
 #mpiexec segfaults if ssh is not present
 #https://trac.mcs.anl.gov/projects/mpich2/ticket/1576
 BuildRequires:  openssh-clients
@@ -162,6 +162,9 @@ make -C build check VERBOSE=1
 
 
 %changelog
+* Wed May 18 2016 Orion Poplawski <orion@cora.nwra.com> - 4.4.4-1
+- Update to 4.4.4
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 4.4.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
