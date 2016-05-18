@@ -1,6 +1,6 @@
 Name:           netcdf-fortran
-Version:        4.4.3
-Release:        2%{?dist}
+Version:        4.4.4
+Release:        1%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -11,7 +11,7 @@ Source0:        https://github.com/Unidata/%{name}/archive/v%{version}.tar.gz#/%
 Patch0:         netcdf-fortran-pkgconfig.patch
 
 BuildRequires:  gcc-gfortran
-BuildRequires:  netcdf-devel
+BuildRequires:  netcdf-devel >= 4.4.0
 #mpiexec segfaults if ssh is not present
 #https://trac.mcs.anl.gov/projects/mpich2/ticket/1576
 BuildRequires:  openssh-clients
@@ -274,6 +274,9 @@ done
 
 
 %changelog
+* Wed May 18 2016 Orion Poplawski <orion@cora.nwra.com> - 4.4.4-1
+- Update to 4.4.4
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 4.4.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
