@@ -1,40 +1,9 @@
-# AltCCRPMS
-%global _cc_name %{getenv:COMPILER_NAME}
-%global _cc_version %{getenv:COMPILER_VERSION}
-%global _cc_name_ver %{_cc_name}-%{_cc_version}
-%global _mpi_name %{getenv:MPI_NAME}
-%global _mpi_version %{getenv:MPI_VERSION}
-%if "%{_mpi_name}" == ""
-%global _with_mpi 0
-%else
-%global _with_mpi 1
-%endif
-%global _netcdf_version %{getenv:NETCDF_VERSION}
-%if 0%{?_with_mpi}
-%global _mpi_name_ver %{_mpi_name}-%{_mpi_version}
-%global _name_suffix -%{_cc_name}-%{_mpi_name}
-%global _name_ver_suffix -%{_cc_name_ver}-%{_mpi_name_ver}
-# Special for netcdf-* packages - we want to install alongside main netcdf package
-%global _prefix /opt/%{_cc_name_ver}/%{_mpi_name_ver}/netcdf-%{_netcdf_version}
-#global _modulefiledir /opt/modulefiles/MPI/%{_cc_name}/%{_cc_version}/%{_mpi_name}/%{_mpi_version}/%{shortname}
-%else
-%global _name_suffix -%{_cc_name}
-%global _name_ver_suffix -%{_cc_name_ver}
-# Special for netcdf-* packages - we want to install alongside main netcdf package
-%global _prefix /opt/%{_cc_name_ver}/netcdf-%{_netcdf_version}
-%global _modulefiledir /opt/modulefiles/Compiler/%{_cc_name}/%{_cc_version}/%{shortname}
-%endif
-
-%global _defaultdocdir %{_prefix}/share/doc
-%global _mandir %{_prefix}/share/man
-
-# Non gcc compilers don't generate build ids
-%undefine _missing_build_ids_terminate_build
-
 %global shortname netcdf-fortran
+%global ver 4.4.4
+%?altcc_init
 
-Name:           %{shortname}-4.4.4%{_name_ver_suffix}
-Version:        4.4.4
+Name:           %{shortname}%{?altcc_pkg_suffix}
+Version:        %{ver}
 Release:        1%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
@@ -45,18 +14,14 @@ Source0:        https://github.com/Unidata/%{shortname}/archive/v%{version}.tar.
 #Use pkgconfig in nf-config to avoid multi-lib issues and remove FFLAGS
 Patch0:         netcdf-fortran-pkgconfig.patch
 
-BuildRequires:  netcdf%{_name_ver_suffix}-devel%{?_isa} >= 4.4.0
+BuildRequires:  netcdf%{?altcc_dep_suffix}-devel >= 4.4.0
 #mpiexec segfaults if ssh is not present
 #https://trac.mcs.anl.gov/projects/mpich2/ticket/1576
 BuildRequires:  openssh-clients
 
-# AltCCRPMS
-Provides:       %{shortname}%{_name_suffix} = %{version}-%{release}
-Provides:       %{shortname}%{_name_suffix}%{?_isa} = %{version}-%{release}
-Provides:       %{shortname}%{_name_ver_suffix} = %{version}-%{release}
-Provides:       %{shortname}%{_name_ver_suffix}%{?_isa} = %{version}-%{release}
+%?altcc_provide
 # Special for netcdf-fortran - replace old versions
-Obsoletes:      %{shortname}-4.4.2%{_name_ver_suffix}
+%{?altcc:Obsoletes:      %{shortname}-4.4.2%{altcc_dep_suffix}}
 
 
 %description
@@ -69,14 +34,11 @@ Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       pkgconfig
 %if "%{_netcdf_version}" != ""
-Requires:       netcdf%{_name_ver_suffix}-devel%{?_isa} = %{_netcdf_version}
+Requires:       netcdf%{?altcc_dep_suffix}-devel%{?_isa} = %{_netcdf_version}
 %endif
-Provides:       %{shortname}%{_name_suffix}-devel = %{version}-%{release}
-Provides:       %{shortname}%{_name_suffix}-devel%{?_isa} = %{version}-%{release}
-Provides:       %{shortname}%{_name_ver_suffix}-devel = %{version}-%{release}
-Provides:       %{shortname}%{_name_ver_suffix}-devel%{?_isa} = %{version}-%{release}
+%{?altcc:%altcc_provide devel}
 # Special for netcdf-fortran - replace old versions
-Obsoletes:      %{shortname}-4.4.2%{_name_ver_suffix}-devel
+%{?altcc:Obsoletes:      %{shortname}-4.4.2%{altcc_dep_suffix}-devel}
 
 %description devel
 This package contains the NetCDF Fortran header files, shared devel libraries,
@@ -87,12 +49,9 @@ and man pages.
 Summary:        Static library for Fortran NetCDF API
 Group:          Development/Libraries
 Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
-Provides:       %{shortname}%{_name_suffix}-static = %{version}-%{release}
-Provides:       %{shortname}%{_name_suffix}-static%{?_isa} = %{version}-%{release}
-Provides:       %{shortname}%{_name_ver_suffix}-static = %{version}-%{release}
-Provides:       %{shortname}%{_name_ver_suffix}-static%{?_isa} = %{version}-%{release}
+%{?altcc:%altcc_provide static}
 # Special for netcdf-fortran - replace old versions
-Obsoletes:      %{shortname}-4.4.2%{_name_ver_suffix}-static
+%{?altcc:Obsoletes:      %{shortname}-4.4.2%{altcc_dep_suffix}-static}
 
 %description static
 This package contains the NetCDF Fortran static library.
@@ -119,7 +78,7 @@ ln -s ../configure .
 export FFLAGS=$(echo $FFLAGS | sed -e 's/-warn all//g')
 export FCFLAGS=$(echo $FCFLAGS | sed -e 's/-warn all//g')
 export F77=$FC
-%if !0%{?_with_mpi}
+%if !0%{?altcc_with_mpi}
 # Serial build
 %configure --enable-extra-example-tests
 %else
@@ -139,6 +98,8 @@ popd
 make -C build install DESTDIR=${RPM_BUILD_ROOT}
 /bin/rm -f ${RPM_BUILD_ROOT}%{_libdir}/*.la
 
+%?altcc_doc
+
 
 %check
 # MPI build is failing - https://github.com/Unidata/netcdf-fortran/issues/42
@@ -146,10 +107,12 @@ make -C build check VERBOSE=1 || :
 
 
 %files
+%{?altcc:%altcc_files -d %{_libdir}}
 %doc COPYRIGHT F03Interfaces_LICENSE README.md RELEASE_NOTES.md
 %{_libdir}/*.so.*
 
 %files devel
+%{?altcc:%altcc_files -d %{_bindir} %{_includedir} %{_mandir}/man3}
 %doc examples
 %{_bindir}/nf-config
 %{_includedir}/netcdf.inc
