@@ -14,6 +14,7 @@ Source0:        https://github.com/Unidata/%{shortname}/archive/v%{version}.tar.
 #Use pkgconfig in nf-config to avoid multi-lib issues and remove FFLAGS
 Patch0:         netcdf-fortran-pkgconfig.patch
 
+%{?altcc:BuildRequires:  gcc-gfortran}
 BuildRequires:  netcdf%{?altcc_dep_suffix}-devel >= 4.4.0
 #mpiexec segfaults if ssh is not present
 #https://trac.mcs.anl.gov/projects/mpich2/ticket/1576
@@ -21,7 +22,7 @@ BuildRequires:  openssh-clients
 
 %?altcc_provide
 # Special for netcdf-fortran - replace old versions
-%{?altcc:Obsoletes:      %{shortname}-4.4.2%{altcc_dep_suffix}}
+%{?altcc:Obsoletes:      %{shortname}-4.4.3%{altcc_dep_suffix}}
 
 
 %description
@@ -32,13 +33,12 @@ Fortran libraries for NetCDF-4.
 Summary:        Development files for Fortran NetCDF API
 Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+%{?!altcc:Requires:       gcc-gfortran%{?_isa}}
 Requires:       pkgconfig
-%if "%{_netcdf_version}" != ""
-Requires:       netcdf%{?altcc_dep_suffix}-devel%{?_isa} = %{_netcdf_version}
-%endif
+Requires:       netcdf%{?altcc_dep_suffix}-devel%{?_isa}
 %{?altcc:%altcc_provide devel}
 # Special for netcdf-fortran - replace old versions
-%{?altcc:Obsoletes:      %{shortname}-4.4.2%{altcc_dep_suffix}-devel}
+%{?altcc:Obsoletes:      %{shortname}-4.4.3%{altcc_dep_suffix}-devel}
 
 %description devel
 This package contains the NetCDF Fortran header files, shared devel libraries,
@@ -51,7 +51,7 @@ Group:          Development/Libraries
 Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
 %{?altcc:%altcc_provide static}
 # Special for netcdf-fortran - replace old versions
-%{?altcc:Obsoletes:      %{shortname}-4.4.2%{altcc_dep_suffix}-static}
+%{?altcc:Obsoletes:      %{shortname}-4.4.3%{altcc_dep_suffix}-static}
 
 %description static
 This package contains the NetCDF Fortran static library.
