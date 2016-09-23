@@ -1,10 +1,16 @@
 %global shortname netcdf-fortran
 %global ver 4.4.4
+%global netcdf_version %{getenv:NETCDF_VERSION}
+%if "%{netcdf_version}" != ""
+%{?altcc_init:%altcc_init -p netcdf-%{netcdf_version}}
+%else
 %?altcc_init
+%endif
+
 
 Name:           %{shortname}%{?altcc_pkg_suffix}
 Version:        %{ver}
-Release:        1%{?dist}
+Release:        1%{?dist}.nwra.1
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -35,7 +41,11 @@ Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 %{?!altcc:Requires:       gcc-gfortran%{?_isa}}
 Requires:       pkgconfig
+%if "%{netcdf_version}" != ""
+Requires:       netcdf%{?altcc_dep_suffix}-devel%{?_isa} = %{netcdf_version}
+%else
 Requires:       netcdf%{?altcc_dep_suffix}-devel%{?_isa}
+%endif
 %{?altcc:%altcc_provide devel}
 # Special for netcdf-fortran - replace old versions
 %{?altcc:Obsoletes:      %{shortname}-4.4.3%{altcc_dep_suffix}-devel}
