@@ -49,7 +49,7 @@ Source0:        http://www.unidata.ucar.edu/downloads/netcdf/ftp/%{shortname}-%{
 #Use pkgconfig in nf-config to avoid multi-lib issues and remove FFLAGS
 Patch0:         netcdf-fortran-pkgconfig.patch
 
-BuildRequires:  netcdf%{_name_ver_suffix}-devel%{?_isa}
+BuildRequires:  netcdf%{_name_ver_suffix}-devel
 #mpiexec segfaults if ssh is not present
 #https://trac.mcs.anl.gov/projects/mpich2/ticket/1576
 BuildRequires:  openssh-clients
