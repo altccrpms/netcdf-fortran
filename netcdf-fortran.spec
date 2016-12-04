@@ -1,6 +1,6 @@
 Name:           netcdf-fortran
 Version:        4.4.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -9,12 +9,17 @@ URL:            http://www.unidata.ucar.edu/software/netcdf/
 Source0:        https://github.com/Unidata/%{name}/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 #Use pkgconfig in nf-config to avoid multi-lib issues and remove FFLAGS
 Patch0:         netcdf-fortran-pkgconfig.patch
+# Fix compilation with -Werrer=implicit-declaration
+# https://github.com/Unidata/netcdf-fortran/pull/57
+Patch1:         netcdf-fortran-implicit.patch
 
 BuildRequires:  gcc-gfortran
 BuildRequires:  netcdf-devel >= 4.4.0
 #mpiexec segfaults if ssh is not present
 #https://trac.mcs.anl.gov/projects/mpich2/ticket/1576
 BuildRequires:  openssh-clients
+# For Patch1
+BuildRequires:  libtool
 
 %global with_mpich 1
 %global with_openmpi 1
@@ -140,6 +145,8 @@ NetCDF Fortran parallel openmpi static libraries
 %prep
 %setup -q
 %patch0 -p1 -b .pkgconfig
+%patch1 -p1 -b .implicit
+autoreconf
 sed -i -e '1i#!/bin/sh' examples/F90/run_f90_par_examples.sh
 
 # Update config.guess/sub to fix builds on new architectures (aarch64/ppc64le)
@@ -274,6 +281,9 @@ done
 
 
 %changelog
+* Sun Dec 4 2016 Orion Poplawski <orion@cora.nwra.com> - 4.4.4-3
+- Add patch to compile with -Werror=implicit-function-declaration
+
 * Sat Oct 22 2016 Orion Poplawski <orion@cora.nwra.com> - 4.4.4-2
 - Rebuild for openmpi 2.0
 
