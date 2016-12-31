@@ -1,6 +1,6 @@
 Name:           netcdf-fortran
 Version:        4.4.4
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -199,12 +199,15 @@ done
 make -C build install DESTDIR=${RPM_BUILD_ROOT}
 mkdir -p ${RPM_BUILD_ROOT}%{_fmoddir}
 /bin/mv ${RPM_BUILD_ROOT}%{_includedir}/*.mod  \
-  ${RPM_BUILD_ROOT}%{_fmoddir}
+  ${RPM_BUILD_ROOT}%{_fmoddir}/
 /bin/rm -f ${RPM_BUILD_ROOT}%{_libdir}/*.la
 for mpi in %{mpi_list}
 do
   module load mpi/$mpi-%{_arch}
   make -C $mpi install DESTDIR=${RPM_BUILD_ROOT}
+  mkdir -p ${RPM_BUILD_ROOT}%{_fmoddir}/${mpi}
+  /bin/mv ${RPM_BUILD_ROOT}%{_includedir}/${mpi}-%{_arch}/*.mod  \
+    ${RPM_BUILD_ROOT}%{_fmoddir}/${mpi}/
   rm $RPM_BUILD_ROOT/%{_libdir}/$mpi/lib/*.la
   gzip $RPM_BUILD_ROOT/%{_libdir}/$mpi/share/man/man3/*.3
   module purge
@@ -231,7 +234,8 @@ done
 
 
 %files
-%doc COPYRIGHT F03Interfaces_LICENSE README.md RELEASE_NOTES.md
+%license COPYRIGHT F03Interfaces_LICENSE
+%doc README.md RELEASE_NOTES.md
 %{_libdir}/*.so.*
 
 %files devel
@@ -249,12 +253,14 @@ done
 
 %if %{with_mpich}
 %files mpich
-%doc COPYRIGHT F03Interfaces_LICENSE README.md RELEASE_NOTES.md
+%license COPYRIGHT F03Interfaces_LICENSE
+%doc README.md RELEASE_NOTES.md
 %{_libdir}/mpich/lib/*.so.*
 
 %files mpich-devel
 %{_libdir}/mpich/bin/nf-config
 %{_includedir}/mpich-%{_arch}/*
+%{_fmoddir}/mpich/*.mod
 %{_libdir}/mpich/lib/*.so
 %{_libdir}/mpich/lib/pkgconfig/%{name}.pc
 %{_libdir}/mpich/share/man/man3/*
@@ -265,12 +271,14 @@ done
 
 %if %{with_openmpi}
 %files openmpi
-%doc COPYRIGHT F03Interfaces_LICENSE README.md RELEASE_NOTES.md
+%license COPYRIGHT F03Interfaces_LICENSE
+%doc README.md RELEASE_NOTES.md
 %{_libdir}/openmpi/lib/*.so.*
 
 %files openmpi-devel
 %{_libdir}/openmpi/bin/nf-config
 %{_includedir}/openmpi-%{_arch}/*
+%{_fmoddir}/openmpi/*.mod
 %{_libdir}/openmpi/lib/*.so
 %{_libdir}/openmpi/lib/pkgconfig/%{name}.pc
 %{_libdir}/openmpi/share/man/man3/*
@@ -281,6 +289,10 @@ done
 
 
 %changelog
+* Sat Dec 31 2016 Orion Poplawski <orion@cora.nwra.com> - 4.4.4-4
+- Install MPI Fortran module into proper location (bug #1409230)
+- Use %%license
+
 * Sun Dec 4 2016 Orion Poplawski <orion@cora.nwra.com> - 4.4.4-3
 - Add patch to compile with -Werror=implicit-function-declaration
 
