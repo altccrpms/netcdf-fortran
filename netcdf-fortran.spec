@@ -10,7 +10,7 @@
 
 Name:           %{shortname}%{?altcc_pkg_suffix}
 Version:        %{ver}
-Release:        1%{?dist}.nwra.1
+Release:        4%{?dist}
 Summary:        Fortran libraries for NetCDF-4
 
 Group:          Applications/Engineering
@@ -19,12 +19,17 @@ URL:            http://www.unidata.ucar.edu/software/netcdf/
 Source0:        https://github.com/Unidata/%{shortname}/archive/v%{version}.tar.gz#/%{shortname}-%{version}.tar.gz
 #Use pkgconfig in nf-config to avoid multi-lib issues and remove FFLAGS
 Patch0:         netcdf-fortran-pkgconfig.patch
+# Fix compilation with -Werrer=implicit-declaration
+# https://github.com/Unidata/netcdf-fortran/pull/57
+Patch1:         netcdf-fortran-implicit.patch
 
 %{?altcc:BuildRequires:  gcc-gfortran}
 BuildRequires:  netcdf%{?altcc_dep_suffix}-devel >= 4.4.0
 #mpiexec segfaults if ssh is not present
 #https://trac.mcs.anl.gov/projects/mpich2/ticket/1576
 BuildRequires:  openssh-clients
+# For Patch1
+BuildRequires:  libtool
 
 %?altcc_provide
 # Special for netcdf-fortran - replace old versions
@@ -70,6 +75,8 @@ This package contains the NetCDF Fortran static library.
 %prep
 %setup -q -n %{shortname}-%{version}
 %patch0 -p1 -b .pkgconfig
+%patch1 -p1 -b .implicit
+autoreconf
 sed -i -e '1i#!/bin/sh' examples/F90/run_f90_par_examples.sh
 
 # Update config.guess/sub to fix builds on new architectures (aarch64/ppc64le)
@@ -109,6 +116,7 @@ make -C build install DESTDIR=${RPM_BUILD_ROOT}
 /bin/rm -f ${RPM_BUILD_ROOT}%{_libdir}/*.la
 
 %?altcc_doc
+%?altcc_license
 
 
 %check
@@ -117,8 +125,9 @@ make -C build check VERBOSE=1 || :
 
 
 %files
-%{?altcc:%altcc_files -d %{_libdir}}
-%doc COPYRIGHT F03Interfaces_LICENSE README.md RELEASE_NOTES.md
+%{?altcc:%altcc_files -dl %{_libdir}}
+%license COPYRIGHT F03Interfaces_LICENSE
+%doc README.md RELEASE_NOTES.md
 %{_libdir}/*.so.*
 
 %files devel
@@ -136,6 +145,16 @@ make -C build check VERBOSE=1 || :
 
 
 %changelog
+* Sat Dec 31 2016 Orion Poplawski <orion@cora.nwra.com> - 4.4.4-4
+- Install MPI Fortran module into proper location (bug #1409230)
+- Use %%license
+
+* Sun Dec 4 2016 Orion Poplawski <orion@cora.nwra.com> - 4.4.4-3
+- Add patch to compile with -Werror=implicit-function-declaration
+
+* Sat Oct 22 2016 Orion Poplawski <orion@cora.nwra.com> - 4.4.4-2
+- Rebuild for openmpi 2.0
+
 * Wed May 18 2016 Orion Poplawski <orion@cora.nwra.com> - 4.4.4-1
 - Update to 4.4.4
 

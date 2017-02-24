@@ -1,0 +1,11 @@
+diff -up netcdf-fortran-4.4.4/acinclude.m4.implicit netcdf-fortran-4.4.4/acinclude.m4
+--- netcdf-fortran-4.4.4/acinclude.m4.implicit	2016-05-13 15:17:37.000000000 -0600
++++ netcdf-fortran-4.4.4/acinclude.m4	2016-12-04 08:30:40.009874855 -0700
+@@ -350,6 +350,7 @@ EOF
+     for ctype in $2; do
+ 	AC_MSG_CHECKING(if Fortran \"$1\" is C \"$ctype\")
+ 	cat >conftest.c <<EOF
++            #include <stdlib.h>
+ 	    void $FCALLSCSUB(values)
+ 		$ctype values[[4]];
+ 	    {
